@@ -2,6 +2,9 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
 
+
+export default function Resultado() {
+
 const { resultado } =  useLocalSearchParams();
 const router = useRouter();
 
@@ -22,14 +25,12 @@ function classifyResult() {
     return "Obesidade grau III (obesidade mórbida)";
   }
 }
-
-export default function Resultado() {
   return (
     <View style={resultadoStyle.container}>
       <Text style={resultadoStyle.titles}>Resultado do IMC</Text>
       <Text style={resultadoStyle.titles}>IMC: {imc}</Text>
       <View style={resultadoStyle.resultContainer}>
-        <Text>{classifyResult()}</Text>
+        <Text style={resultadoStyle.titles}>{classifyResult()}</Text>
       </View>
       <View style={resultadoStyle.info}>
         <Text style={resultadoStyle.textInfo}>
@@ -65,7 +66,9 @@ const resultadoStyle = StyleSheet.create({
         width: '40%',
         backgroundColor: '#cce5cc',
         height: 72,
-        borderRadius: 10
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
 
 
     },

@@ -1,10 +1,30 @@
-import { Text, View, StyleSheet } from "react-native";
-import { Stack } from "expo-router";
+import { Text, View, StyleSheet, Pressable, TextInput, Alert } from "react-native";
+import { useState } from "react";
 
 export default function CalculadoraIMC() {
+    const [peso, setPeso] = useState('');
+    const [altura, setAltura] = useState('');
+    const [resultado, setResultado] = useState('');
+
+    function calcularIMC() {
+        const pesoNum = parseFloat(peso);
+        const alturaNum = parseFloat(altura);
+        if (isNaN(pesoNum) || isNaN(alturaNum) || alturaNum <= 0) {
+            return Alert.alert('Entrada inválida', 'Por favor, insira valores válidos para peso e altura.');
+        }
+        const imc = pesoNum / (alturaNum * alturaNum);
+        return imc.toFixed(2)
+    };
   return (
     <View style={styles.container}>
-      
+        <Text style={{ fontSize: 20, color: '#18543e', marginBottom: 20, fontWeight: 'bold' }}>Calculadora de IMC</Text>
+        <TextInput style={styles.input} placeholder='Peso (kg)' value={peso} onChangeText={setPeso}></TextInput>
+        <TextInput style={styles.input} placeholder='Altura (m)' value={altura} onChangeText={setAltura}></TextInput>
+        <Pressable onPress={() => {setResultado(calcularIMC());}} style={styles.Pressable}>
+            <Text style={{ color: '#18543e', fontWeight: 'bold' }}>Ver resultado</Text>
+        </Pressable>
+
+
     </View>
   );
 }
@@ -15,5 +35,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#e6f2e6",
+  },
+
+  Pressable: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 115,
+    height: 55,
+    backgroundColor: "#cce5cc",
+    padding: 10,
+    borderRadius: 5,
+    margin: 15,
+  },
+
+  input: {
+    height: 50,
+    width: 300,
+    borderColor: '#18543e',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    margin: 15
   },
 });

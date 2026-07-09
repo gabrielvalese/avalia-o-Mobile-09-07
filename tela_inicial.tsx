@@ -11,7 +11,7 @@ export default function Index() {
 </Text>
     
     <View style={style.botao}>
-      <Link href='/'>
+      <Link href="/components/calculadora_imc">
       <Text style={style.texto_botao}>Clique aqui para calcular seu IMC</Text>
       </Link>
     </View>
@@ -36,7 +36,8 @@ const style = StyleSheet.create({
   titulo: {
     color: '#017c24',
     fontSize: 24,
-    marginTop: 15
+    marginTop: 15,
+    fontWeight: 'bold'
   },
   texto: {
     paddingTop: 30,

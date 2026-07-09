@@ -1,26 +1,45 @@
 import { Text, View, StyleSheet, Pressable, TextInput, Alert } from "react-native";
 import { useState } from "react";
+import { useRouter } from "expo-router";
 
 export default function CalculadoraIMC() {
     const [peso, setPeso] = useState('');
     const [altura, setAltura] = useState('');
     const [resultado, setResultado] = useState('');
+    const router = useRouter();
 
     function calcularIMC() {
         const pesoNum = parseFloat(peso);
         const alturaNum = parseFloat(altura);
         if (isNaN(pesoNum) || isNaN(alturaNum) || alturaNum <= 0) {
-            return Alert.alert('Entrada inválida', 'Por favor, insira valores válidos para peso e altura.');
+            Alert.alert('Entrada inválida', 'Por favor, insira valores válidos para peso e altura.');
+            return null;
         }
         const imc = pesoNum / (alturaNum * alturaNum);
         return imc.toFixed(2)
     };
+
+
+    function passarResultado() {
+        const imcCalculado = calcularIMC();
+        if (imcCalculado === null) {
+            return;
+        }
+        
+        setResultado(imcCalculado);
+        router.push({
+            pathname: '/components/resultado',
+            params: { resultado: imcCalculado },
+        });
+    }
+
+
   return (
     <View style={styles.container}>
         <Text style={{ fontSize: 20, color: '#18543e', marginBottom: 20, fontWeight: 'bold' }}>Calculadora de IMC</Text>
         <TextInput style={styles.input} placeholder='Peso (kg)' value={peso} onChangeText={setPeso}></TextInput>
         <TextInput style={styles.input} placeholder='Altura (m)' value={altura} onChangeText={setAltura}></TextInput>
-        <Pressable onPress={() => {setResultado(calcularIMC());}} style={styles.Pressable}>
+        <Pressable onPress={passarResultado} style={styles.Pressable}>
             <Text style={{ color: '#18543e', fontWeight: 'bold' }}>Ver resultado</Text>
         </Pressable>
 
